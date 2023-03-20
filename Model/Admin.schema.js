@@ -26,7 +26,7 @@ const adminSchema = new mongoose.Schema(
     role: {
       type: String,
       enum: Object.values(AuthRoles),
-      default: AuthRoles.DEPARTMENT,
+      default: AuthRoles.USER,
     },
     forgotPasswordToken: String,
     forgotPasswordExpiry: Date,
@@ -43,5 +43,32 @@ adminSchema.pre("save", async function (next) {
   this.password = await bcrypt.hash(this.password, 10);
   next();
 });
+
+//adding more features to the model
+
+adminSchema.methods = {
+  //compare password method
+
+  comparePassword: async function (enteredPassword) {
+    return await bcrypt.compare(enteredPassword, this.password);
+  },
+
+  //generate JWT token
+  getJWTtoken: async function () {
+    //
+    return jwt.sign(
+      {
+        _id: this._id,
+        role: this.role,
+      },
+      config.JWT_SECRET,
+      {
+        expiresIn: config.JWT_EXPIRY,
+      }
+    );
+  },
+
+  //generate forgot password token for mail can be added
+};
 
 export default mongoose.model("Admin", adminSchema);
