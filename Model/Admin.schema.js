@@ -28,8 +28,6 @@ const adminSchema = new mongoose.Schema(
       enum: Object.values(AuthRoles),
       default: AuthRoles.USER,
     },
-    forgotPasswordToken: String,
-    forgotPasswordExpiry: Date,
   },
   {
     timestamps: true,
