@@ -1,5 +1,5 @@
 const AuthRoles = {
   ADMIN: "ADMIN",
-  DEPARTMENT: "DEPARTMENT",
+  USER: "USER",
 };
 export default AuthRoles;
