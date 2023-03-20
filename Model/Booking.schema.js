@@ -11,3 +11,9 @@ const bookingSchema = new mongoose.Schema({
 });
 
 export default mongoose.model("Booking", bookingSchema);
+
+bookingSchema.methods = {
+  changeStatus: async function () {
+    return this.status === "AVAILABLE" ? "BOOKED" : "AVAILABLE";
+  },
+};
